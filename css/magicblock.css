@@ -1,0 +1,48 @@
+
+
+
+[data-type="magicblock/magicblock"] .editor-inner-blocks {
+    border-top-left-radius: 0px;
+    padding: 1em;
+    border: 1px solid rgb(77, 77, 77);
+}
+
+
+.magicblock-label-magic {
+    font-size: .6em;
+    padding: .5em 1em ;
+    font-family: 'Courier New', Courier, monospace;
+    background: white;
+    display: inline-block;
+    border: 1px solid rgb(77, 77, 77);
+    border-bottom: none;
+    transform: translateY(1px);
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.editor-plain-text.magicblock-plaintext {
+    font-family: Menlo,Consolas,monaco,monospace;
+    font-size: 14px;
+    color: #23282d;
+    padding: .8em 1em;
+    border: 1px solid #e2e4e7;
+    border-radius: 4px;
+}
+
+.magicblock-class-span , .magicblock-id-span {
+    display: inline-block;
+    padding:3px 6px;
+    margin: 3px;
+    word-wrap: break-word;
+    max-width: 100%;
+
+}
+
+.magicblock-class-span {
+    background: rgba(173, 216, 230, 0.242);
+}
+
+.magicblock-id-span {
+    background: rgba(230, 186, 173, 0.214);
+}

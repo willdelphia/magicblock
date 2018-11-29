@@ -1,3 +1,5 @@
+console.log('this has been a test please disregard');
+
 var el = wp.element.createElement,
     Fragment = wp.element.Fragment,
     registerBlockType = wp.blocks.registerBlockType,

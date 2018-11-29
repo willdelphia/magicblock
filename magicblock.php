@@ -7,6 +7,9 @@ Author:       Will Delphia
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:  magic-block
+
+GitHub Plugin URI: willdelphia/magicblock
+GitHub Plugin URI: https://github.com/willdelphia/magicblock
 */
 
 function magicblock_register_scripts() {

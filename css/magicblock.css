@@ -33,7 +33,7 @@
 .magicblock-class-span , .magicblock-id-span {
     display: inline-block;
     padding:3px 6px;
-    margin: 3px;
+    margin: 0 3px;
     word-wrap: break-word;
     max-width: 100%;
 

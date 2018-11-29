@@ -14,7 +14,7 @@ function magicblock_register_scripts() {
     wp_register_script(
         'magicblock-main-script',
         plugins_url( 'js/magicblock.js', __FILE__ ),
-        array( 'wp-blocks', 'wp-element' )
+        array( 'wp-blocks', 'wp-element', 'wp-editor')
     );
 
     wp_register_style(
@@ -26,7 +26,7 @@ function magicblock_register_scripts() {
 
     register_block_type( 'magicblock/magicblock', array(
         'editor_script' => 'magicblock-main-script',
-        'editor_style'  => 'wd-magicblock-css'
+        'editor_style'  => 'magicblock-css'
         )
     );
 }

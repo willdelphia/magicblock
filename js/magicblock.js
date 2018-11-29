@@ -1,3 +1,4 @@
+console.log('magicblock is up and running');
 
 var el = wp.element.createElement,
     Fragment = wp.element.Fragment,

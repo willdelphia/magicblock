@@ -1,4 +1,4 @@
-console.log('this has been a test please disregard');
+console.log('this has NOT been a test please disregard');
 
 var el = wp.element.createElement,
     Fragment = wp.element.Fragment,

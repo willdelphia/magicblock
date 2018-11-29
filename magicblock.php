@@ -34,5 +34,3 @@ function magicblock_register_scripts() {
     );
 }
 add_action( 'init', 'magicblock_register_scripts' );
-
-echo "this has been a test. please disregrd";

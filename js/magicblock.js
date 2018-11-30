@@ -118,16 +118,18 @@ registerBlockType( 'magicblock/magicblock', {
                         )
                     )
                     ),
-                    el(Fragment, null, 
-                        el("div", {className: "magicblock-label"}, 
-                            el(Fragment, null, 
-                                el('span', {className: 'magicblock-attr-span'}, (elemTag || "div")), 
-                                (elemId ?  el('span', {className: 'magicblock-id-span'}, "#" + elemId) : null ) ,
-                                (elemClass ?  el('span', {className: 'magicblock-class-span'}, convertClassString(elemClass)) : null ) ,
-                            ) 
-                        ),
+                    el("div", {className: "magicblock-editor"}, 
+                        el(Fragment, null, 
+                            el("div", {className: "magicblock-label"}, 
+                                el(Fragment, null, 
+                                    el('span', {className: 'magicblock-attr-span'}, (elemTag || "div")), 
+                                    (elemId ?  el('span', {className: 'magicblock-id-span'}, "#" + elemId) : null ) ,
+                                    (elemClass ?  el('span', {className: 'magicblock-class-span'}, convertClassString(elemClass)) : null ) ,
+                                ) 
+                            ),
                             el(InnerBlocks, null)
                         )
+                    )
                 )
     },
     save: function( props ) {

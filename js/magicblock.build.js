@@ -80,7 +80,13 @@ var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl;
 
 
-var icon = el("svg", { width: 20, height: 20, viewBox: '0 0 20 20' }, el("path", { d: "M7.17,11.29m7.51-3.44,3.82,2.28-3.82,2.31v1.65L20,11V9.31L14.68,6.19ZM5.32,12.42,1.5,10.14,5.32,7.83V6.19L0,9.31V11l5.32,3.13Zm3.52-2.28L6.55,14.59H8.42l1.44-3,1.7,3h1.89L11,10.11l2.44-4.43H11.47L10.07,8.5,8.5,5.68H6.6Z" }));
+var icon = function icon() {
+    return wp.element.createElement(
+        "svg",
+        { width: "20", height: "20", viewBox: "0 0 20 20" },
+        wp.element.createElement("path", { d: "M7.17,11.29m7.51-3.44,3.82,2.28-3.82,2.31v1.65L20,11V9.31L14.68,6.19ZM5.32,12.42,1.5,10.14,5.32,7.83V6.19L0,9.31V11l5.32,3.13Zm3.52-2.28L6.55,14.59H8.42l1.44-3,1.7,3h1.89L11,10.11l2.44-4.43H11.47L10.07,8.5,8.5,5.68H6.6Z" })
+    );
+};
 
 registerBlockType('magicblock/magicblock', {
     title: 'Magic Block',
@@ -145,42 +151,42 @@ registerBlockType('magicblock/magicblock', {
                 null,
                 wp.element.createElement(
                     PanelBody,
-                    { title: 'Element Type' },
-                    wp.element.createElement(SelectControl, { label: 'Tag', value: 'elemTag', options: [{ label: "Div", value: "div" }, { label: "Section", value: 'section' }, { label: "Main", value: 'main' }, { label: "Aside", value: 'aside' }, { label: "Article", value: 'article' }, { label: "Header", value: 'header' }, { label: "Footer", value: 'footer' }, { label: "Nav", value: 'nav' }],
+                    { title: "Element Type" },
+                    wp.element.createElement(SelectControl, { label: "Tag", value: "elemTag", options: [{ label: "Div", value: "div" }, { label: "Section", value: 'section' }, { label: "Main", value: 'main' }, { label: "Aside", value: 'aside' }, { label: "Article", value: 'article' }, { label: "Header", value: 'header' }, { label: "Footer", value: 'footer' }, { label: "Nav", value: 'nav' }],
                         onChange: onChangeElem })
                 ),
                 wp.element.createElement(
                     PanelBody,
-                    { title: 'ID' },
-                    wp.element.createElement(PlainText, { onChange: onChangeID, value: elemId, className: 'magicblock-plaintext' })
+                    { title: "ID" },
+                    wp.element.createElement(PlainText, { onChange: onChangeID, value: elemId, className: "magicblock-plaintext" })
                 ),
                 wp.element.createElement(
                     PanelBody,
-                    { title: 'Class(es)' },
-                    wp.element.createElement(PlainText, { onChange: onChangeInlineStyle, value: inlineSytle, className: 'magicblock-plaintext' })
+                    { title: "Class(es)" },
+                    wp.element.createElement(PlainText, { onChange: onChangeInlineStyle, value: inlineSytle, className: "magicblock-plaintext" })
                 )
             ),
             wp.element.createElement(
-                'div',
-                { className: 'magicblock-editor' },
+                "div",
+                { className: "magicblock-editor" },
                 wp.element.createElement(
-                    'div',
-                    { className: 'magicblock-label' },
+                    "div",
+                    { className: "magicblock-label" },
                     wp.element.createElement(
-                        'span',
-                        { className: 'magicblock-attr-span' },
+                        "span",
+                        { className: "magicblock-attr-span" },
                         elemTag || "div"
                     ),
                     elemId && wp.element.createElement(
-                        'span',
-                        { className: 'magicblock-id-span' },
-                        '#',
+                        "span",
+                        { className: "magicblock-id-span" },
+                        "#",
                         elemId
                     ),
                     elemClass && wp.element.createElement(
-                        'span',
-                        { className: 'magicblock-class-span' },
-                        '.',
+                        "span",
+                        { className: "magicblock-class-span" },
+                        ".",
                         convertClassString(elemClass)
                     )
                 ),

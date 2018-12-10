@@ -5,9 +5,11 @@ const { InspectorControls, InnerBlocks, PlainText} = wp.editor;
 const { Fragment } = wp.element;
 const { PanelBody, SelectControl } = wp.components;
 
-const icon= el("svg", { width: 20, height: 20, viewBox: '0 0 20 20'  },
-        el("path", { d: "M7.17,11.29m7.51-3.44,3.82,2.28-3.82,2.31v1.65L20,11V9.31L14.68,6.19ZM5.32,12.42,1.5,10.14,5.32,7.83V6.19L0,9.31V11l5.32,3.13Zm3.52-2.28L6.55,14.59H8.42l1.44-3,1.7,3h1.89L11,10.11l2.44-4.43H11.47L10.07,8.5,8.5,5.68H6.6Z"})
-    );
+const icon = () => {
+   return (<svg width="20" height="20" viewBox="0 0 20 20">
+                <path d="M7.17,11.29m7.51-3.44,3.82,2.28-3.82,2.31v1.65L20,11V9.31L14.68,6.19ZM5.32,12.42,1.5,10.14,5.32,7.83V6.19L0,9.31V11l5.32,3.13Zm3.52-2.28L6.55,14.59H8.42l1.44-3,1.7,3h1.89L11,10.11l2.44-4.43H11.47L10.07,8.5,8.5,5.68H6.6Z"></path>
+           </svg>);
+};
 
 registerBlockType( 'magicblock/magicblock', {
     title: 'Magic Block',

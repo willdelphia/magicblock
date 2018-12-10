@@ -16,7 +16,7 @@ function magicblock_register_scripts() {
 
     wp_register_script(
         'magicblock-main-script',
-        plugins_url( 'js/magicblock.js', __FILE__ ),
+        plugins_url( 'js/magicblock.build.js', __FILE__ ),
         array( 'wp-blocks', 'wp-element', 'wp-editor')
     );
 

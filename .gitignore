@@ -83,4 +83,8 @@ js/.fusebox/
 #DynamoDB Local files
 js/.dynamodb/
 
+
+js/.DS_Store
+
 # End of https://www.gitignore.io/api/node
+

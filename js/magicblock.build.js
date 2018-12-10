@@ -163,6 +163,11 @@ registerBlockType('magicblock/magicblock', {
                 wp.element.createElement(
                     PanelBody,
                     { title: "Class(es)" },
+                    wp.element.createElement(PlainText, { onChange: onChangeClass, value: elemClass, className: "magicblock-plaintext" })
+                ),
+                wp.element.createElement(
+                    PanelBody,
+                    { title: "Inline CSS" },
                     wp.element.createElement(PlainText, { onChange: onChangeInlineStyle, value: inlineSytle, className: "magicblock-plaintext" })
                 )
             ),

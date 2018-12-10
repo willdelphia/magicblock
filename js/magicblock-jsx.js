@@ -86,6 +86,9 @@ registerBlockType( 'magicblock/magicblock', {
                         <PlainText onChange={onChangeID} value={elemId} className="magicblock-plaintext"/>
                      </PanelBody>
                      <PanelBody title="Class(es)">
+                        <PlainText onChange={onChangeClass} value={elemClass} className="magicblock-plaintext"/>
+                     </PanelBody>
+                     <PanelBody title="Inline CSS">
                         <PlainText onChange={onChangeInlineStyle} value={inlineSytle} className="magicblock-plaintext"/>
                      </PanelBody>
                 </InspectorControls>

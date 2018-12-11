@@ -126,8 +126,9 @@ registerBlockType('magicblock/magicblock', {
             elemClass = props.attributes.elemClass;
 
         function convertClassString(input) {
-            return "." + input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
+            return input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
         }
+
         function onChangeElem(newElem) {
             props.setAttributes({ elemTag: newElem });
         }
@@ -143,6 +144,7 @@ registerBlockType('magicblock/magicblock', {
         function onChangeClass(newClass) {
             props.setAttributes({ elemClass: newClass });
         }
+
         return wp.element.createElement(
             Fragment,
             null,
@@ -152,8 +154,8 @@ registerBlockType('magicblock/magicblock', {
                 wp.element.createElement(
                     PanelBody,
                     { title: "Element Type" },
-                    wp.element.createElement(SelectControl, { label: "Tag", value: "elemTag", options: [{ label: "Div", value: "div" }, { label: "Section", value: 'section' }, { label: "Main", value: 'main' }, { label: "Aside", value: 'aside' }, { label: "Article", value: 'article' }, { label: "Header", value: 'header' }, { label: "Footer", value: 'footer' }, { label: "Nav", value: 'nav' }],
-                        onChange: onChangeElem })
+                    wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "Div", value: "div" }, { label: "Section", value: 'section' }, { label: "Main", value: 'main' }, { label: "Aside", value: 'aside' }, { label: "Article", value: 'article' }, { label: "Header", value: 'header' }, { label: "Footer", value: 'footer' }, { label: "Nav", value: 'nav' }]
+                    })
                 ),
                 wp.element.createElement(
                     PanelBody,

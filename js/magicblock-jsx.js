@@ -43,14 +43,15 @@ registerBlockType( 'magicblock/magicblock', {
     },
 
     edit:  props => {
-        const inlineSytle = props.attributes.inlineStyle,
+        let inlineSytle = props.attributes.inlineStyle,
                 elemTag = props.attributes.elemTag,
                 elemId = props.attributes.elemId,
                 elemClass = props.attributes.elemClass;
 
         function convertClassString(input) {
-            return  "." + input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
+            return  input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
         }
+
         function onChangeElem( newElem ) {
             props.setAttributes( { elemTag: newElem } );
         }
@@ -66,11 +67,12 @@ registerBlockType( 'magicblock/magicblock', {
         function onChangeClass ( newClass ) {
             props.setAttributes( { elemClass: newClass } );
         }
+
         return  (
             <Fragment>
                 <InspectorControls>
                      <PanelBody title="Element Type">
-                        <SelectControl label="Tag" value="elemTag" options={[ 
+                        <SelectControl label="Tag" value={elemTag} onChange={onChangeElem} options={[ 
                                     { label: "Div", value: "div"},
                                     { label: "Section", value: 'section'},
                                     { label: "Main", value: 'main'},
@@ -79,8 +81,8 @@ registerBlockType( 'magicblock/magicblock', {
                                     { label: "Header", value: 'header'},
                                     { label: "Footer", value: 'footer'},
                                     { label: "Nav", value: 'nav'}
-                                     ]}
-                                     onChange={onChangeElem} />
+                                     ]} 
+                                     /> 
                      </PanelBody>
                      <PanelBody title="ID">
                         <PlainText onChange={onChangeID} value={elemId} className="magicblock-plaintext"/>
@@ -104,7 +106,7 @@ registerBlockType( 'magicblock/magicblock', {
         );
     },
     save: props => {
-        const inlineSytle = props.attributes.inlineStyle,
+        let inlineSytle = props.attributes.inlineStyle,
         elemId = props.attributes.elemId, 
         elemClass = props.attributes.elemClass,
         ElemTag = props.attributes.elemTag || "div";

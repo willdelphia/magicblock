@@ -1,7 +1,7 @@
 === Magic Block ===
 Contributors: willdelphia
 Tags: gutenberg, block, container, html element, flexbox, css grid, tag
-Requires at least: 4.9.8
+Requires at least: 5.0
 Tested up to: 5.0
 License: GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html

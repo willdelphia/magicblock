@@ -1,6 +1,6 @@
 === Magic Block ===
 Contributors: willdelphia
-Tags: gutenberg, block, container, html element, flexbox, css grid, tag
+Tags: gutenberg, block, container, html element, flexbox, css grid, tag, nesting, child blocks, parent blocks
 Requires at least: 5.0
 Tested up to: 5.0
 License: GPL2

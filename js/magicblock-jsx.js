@@ -112,7 +112,7 @@ registerBlockType( 'magicblock/magicblock', {
         ElemTag = props.attributes.elemTag || "div";
 
         return (<ElemTag
-                className={"magicblock-magicblock" + (elemClass ? " " + elemClass : "")} 
+                className={(elemClass ? " " + elemClass : "")} 
                 style={inlineSytle} 
                 id={elemId}>
                     <InnerBlocks.Content/>

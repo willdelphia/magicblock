@@ -1,13 +1,17 @@
 === Magic Block ===
 Contributors: willdelphia
-Tags: gutenberg, block, container, html element, flexbox, css grid, tag, nesting, child blocks, parent blocks
+Tags: gutenberg, block, container, container block, html element, html5, div, section, flexbox, css grid, tag, nesting, child blocks, parent blocks
 Requires at least: 5.0
 Tested up to: 5.0
+Requires PHP: 5.2.4
 License: GPL2
+Stable tag: trunk
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
-Registers a container block with the Gutenberg (WP5.0) editor. This block has settings for element type (div, section, etc), id, classname, and style (inline css). 
+Registers a container block with the Gutenberg (WP5+) editor. This block has settings for element type (div, section, etc), id, classname, and style (inline css). 
 
 == Description ==
 
-Registers a container block with the Gutenberg (WP5.0) editor. This block has settings for element type (div, section, etc), id, classname, and style (inline css). It is designed for people who want full control over post HTML, or wish to use the editor to create complex layouts (Flexbox, CSS Grid, Bootstrap, etc) 
+Registers a container block with the Gutenberg (WP5+) editor. This block has settings for element type (div, section, article, main, aside, etc), id, classname, and style (inline css). It is designed for people who want full control over post HTML structure, or wish to use the editor to create complex layouts (Flexbox, CSS Grid, Bootstrap, etc). 
+
+This block does not add any CSS styles that you, as a developer, do not provide. Rather, it allows you to easily contain other blocks in parent elements with arbitrary ID, classname, or style attributes. 

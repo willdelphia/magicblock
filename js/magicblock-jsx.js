@@ -25,13 +25,13 @@ registerBlockType( 'magicblock/magicblock', {
         inlineStyle: {
             type: 'string',
             source: 'attribute',
-            selector: '.magicblock-magicblock',
+            selector: '.wp-block-magicblock-magicblock',
             attribute: 'style',
         }, 
         elemId: {
             type: 'string',
             source: 'attribute',
-            selector: '.magicblock-magicblock',
+            selector: '.wp-block-magicblock-magicblock',
             attribute: 'id',
         }, 
         elemClass: {
@@ -112,7 +112,7 @@ registerBlockType( 'magicblock/magicblock', {
         ElemTag = props.attributes.elemTag || "div";
 
         return (<ElemTag
-                className={(elemClass ? " " + elemClass : "")} 
+                className={elemClass} 
                 style={inlineSytle} 
                 id={elemId}>
                     <InnerBlocks.Content/>

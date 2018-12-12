@@ -102,13 +102,13 @@ registerBlockType('magicblock/magicblock', {
         inlineStyle: {
             type: 'string',
             source: 'attribute',
-            selector: '.magicblock-magicblock',
+            selector: '.wp-block-magicblock-magicblock',
             attribute: 'style'
         },
         elemId: {
             type: 'string',
             source: 'attribute',
-            selector: '.magicblock-magicblock',
+            selector: '.wp-block-magicblock-magicblock',
             attribute: 'id'
         },
         elemClass: {
@@ -210,7 +210,7 @@ registerBlockType('magicblock/magicblock', {
         return wp.element.createElement(
             ElemTag,
             {
-                className: "magicblock-magicblock" + (elemClass ? " " + elemClass : ""),
+                className: elemClass,
                 style: inlineSytle,
                 id: elemId },
             wp.element.createElement(InnerBlocks.Content, null)

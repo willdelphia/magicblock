@@ -2,7 +2,7 @@
 Contributors: willdelphia
 Tags: gutenberg, block, container block, html element, html5, div, section, flexbox, css grid, tag, nesting, child blocks, parent blocks
 Requires at least: 5.0
-Tested up to: 5.0
+Tested up to: 5.1
 Requires PHP: 5.2.4
 License: GPL2
 Stable tag: trunk

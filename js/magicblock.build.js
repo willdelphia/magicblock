@@ -154,7 +154,7 @@ registerBlockType('magicblock/magicblock', {
                 wp.element.createElement(
                     PanelBody,
                     { title: "Element Type" },
-                    wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "Div", value: "div" }, { label: "Section", value: 'section' }, { label: "Main", value: 'main' }, { label: "Aside", value: 'aside' }, { label: "Article", value: 'article' }, { label: "Header", value: 'header' }, { label: "Footer", value: 'footer' }, { label: "Nav", value: 'nav' }]
+                    wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "div", value: "div" }, { label: "section", value: 'section' }, { label: "main", value: 'main' }, { label: "aside", value: 'aside' }, { label: "article", value: 'article' }, { label: "header", value: 'header' }, { label: "footer", value: 'footer' }, { label: "nav", value: 'nav' }, { label: "dl", value: 'dl' }, { label: "dd", value: 'dd' }, { label: "dt", value: 'dt' }]
                     })
                 ),
                 wp.element.createElement(

@@ -1,5 +1,5 @@
 
-.magicblock-editor .editor-inner-blocks {
+.magicblock-editor > .editor-inner-blocks {
     border-top-left-radius: 0px;
     padding: 0 1em;
     border: 1px solid rgb(215, 215, 215);

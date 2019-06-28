@@ -67,6 +67,8 @@
 /* 0 */
 /***/ (function(module, exports) {
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 console.log('magicblock is up and running');
 
 var registerBlockType = wp.blocks.registerBlockType;
@@ -105,6 +107,12 @@ registerBlockType('magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'style'
         },
+        href: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.wp-block-magicblock-magicblock',
+            attribute: 'href'
+        },
         elemId: {
             type: 'string',
             source: 'attribute',
@@ -123,7 +131,8 @@ registerBlockType('magicblock/magicblock', {
         var inlineSytle = props.attributes.inlineStyle,
             elemTag = props.attributes.elemTag,
             elemId = props.attributes.elemId,
-            elemClass = props.attributes.elemClass;
+            elemClass = props.attributes.elemClass,
+            href = props.attributes.href;
 
         function convertClassString(input) {
             return input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -145,6 +154,16 @@ registerBlockType('magicblock/magicblock', {
             props.setAttributes({ elemClass: newClass });
         }
 
+        function onChangeHref(newHref) {
+            props.setAttributes({ href: newHref });
+        }
+
+        var linkPanels = wp.element.createElement(
+            PanelBody,
+            { title: "Link Href" },
+            wp.element.createElement(PlainText, { onChange: onChangeHref, value: href, className: "magicblock-plaintext" })
+        );
+
         return wp.element.createElement(
             Fragment,
             null,
@@ -154,9 +173,10 @@ registerBlockType('magicblock/magicblock', {
                 wp.element.createElement(
                     PanelBody,
                     { title: "Element Type" },
-                    wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "div", value: "div" }, { label: "section", value: 'section' }, { label: "main", value: 'main' }, { label: "aside", value: 'aside' }, { label: "article", value: 'article' }, { label: "header", value: 'header' }, { label: "footer", value: 'footer' }, { label: "nav", value: 'nav' }, { label: "dl", value: 'dl' }, { label: "dd", value: 'dd' }, { label: "dt", value: 'dt' }]
+                    wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "div", value: "div" }, { label: "section", value: 'section' }, { label: "main", value: 'main' }, { label: "aside", value: 'aside' }, { label: "article", value: 'article' }, { label: "header", value: 'header' }, { label: "footer", value: 'footer' }, { label: "nav", value: 'nav' }, { label: "dl", value: 'dl' }, { label: "dd", value: 'dd' }, { label: "dt", value: 'dt' }, { label: "a", value: "a" }]
                     })
                 ),
+                elemTag === "a" ? linkPanels : null,
                 wp.element.createElement(
                     PanelBody,
                     { title: "ID" },
@@ -205,14 +225,21 @@ registerBlockType('magicblock/magicblock', {
         var inlineSytle = props.attributes.inlineStyle,
             elemId = props.attributes.elemId,
             elemClass = props.attributes.elemClass,
-            ElemTag = props.attributes.elemTag || "div";
+            ElemTag = props.attributes.elemTag || "div",
+            href = props.attributes.href || "";
+
+        var aProps = {};
+        if (ElemTag === "a" && href) {
+            aProps.href = href;
+        }
 
         return wp.element.createElement(
             ElemTag,
-            {
+            _extends({
                 className: elemClass,
                 style: inlineSytle,
-                id: elemId },
+                id: elemId
+            }, aProps),
             wp.element.createElement(InnerBlocks.Content, null)
         );
     }

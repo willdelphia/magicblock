@@ -28,6 +28,12 @@ registerBlockType( 'magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'style',
         }, 
+        href: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.wp-block-magicblock-magicblock',
+            attribute: 'href',
+        },
         elemId: {
             type: 'string',
             source: 'attribute',
@@ -46,7 +52,8 @@ registerBlockType( 'magicblock/magicblock', {
         let inlineSytle = props.attributes.inlineStyle,
                 elemTag = props.attributes.elemTag,
                 elemId = props.attributes.elemId,
-                elemClass = props.attributes.elemClass;
+                elemClass = props.attributes.elemClass,
+                href = props.attributes.href;
 
         function convertClassString(input) {
             return  input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -68,6 +75,18 @@ registerBlockType( 'magicblock/magicblock', {
             props.setAttributes( { elemClass: newClass } );
         }
 
+        function onChangeHref ( newHref ) {
+            props.setAttributes( { href: newHref } );
+        }
+
+ 
+
+        const linkPanels = (
+            <PanelBody title="Link Href">
+                <PlainText onChange={onChangeHref} value={href} className="magicblock-plaintext"/>
+            </PanelBody>
+        );
+
         return  (
             <Fragment>
                 <InspectorControls>
@@ -83,10 +102,12 @@ registerBlockType( 'magicblock/magicblock', {
                                     { label: "nav", value: 'nav'},
                                     { label: "dl", value: 'dl'},
                                     { label: "dd", value: 'dd'},
-                                    { label: "dt", value: 'dt'}
+                                    { label: "dt", value: 'dt'},
+                                    { label: "a", value: "a"}
                                      ]} 
                                      /> 
                      </PanelBody>
+                     {  elemTag === "a" ? linkPanels : null }
                      <PanelBody title="ID">
                         <PlainText onChange={onChangeID} value={elemId} className="magicblock-plaintext"/>
                      </PanelBody>
@@ -112,12 +133,20 @@ registerBlockType( 'magicblock/magicblock', {
         let inlineSytle = props.attributes.inlineStyle,
         elemId = props.attributes.elemId, 
         elemClass = props.attributes.elemClass,
-        ElemTag = props.attributes.elemTag || "div";
+        ElemTag = props.attributes.elemTag || "div", 
+        href = props.attributes.href || "";        
+
+        const aProps = {};
+        if(ElemTag === "a" && href){
+            aProps.href = href;
+        }
 
         return (<ElemTag
                 className={elemClass} 
                 style={inlineSytle} 
-                id={elemId}>
+                id={elemId}
+                {...aProps}
+                >
                     <InnerBlocks.Content/>
                 </ElemTag>);
          }

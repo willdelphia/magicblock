@@ -3,7 +3,8 @@ console.log('magicblock is up and running');
 const { registerBlockType } = wp.blocks;
 const { InspectorControls, InnerBlocks, PlainText} = wp.editor;
 const { Fragment } = wp.element;
-const { PanelBody, SelectControl } = wp.components;
+const { PanelBody, SelectControl, CheckboxControl } = wp.components;
+
 
 const icon = () => {
    return (<svg width="20" height="20" viewBox="0 0 20 20">
@@ -34,6 +35,9 @@ registerBlockType( 'magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href',
         },
+        newTab: {
+            type: 'boolean'
+        },
         elemId: {
             type: 'string',
             source: 'attribute',
@@ -53,7 +57,9 @@ registerBlockType( 'magicblock/magicblock', {
                 elemTag = props.attributes.elemTag,
                 elemId = props.attributes.elemId,
                 elemClass = props.attributes.elemClass,
-                href = props.attributes.href;
+                href = props.attributes.href,
+                newTab = props.attributes.newTab;
+
 
         function convertClassString(input) {
             return  input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -79,11 +85,21 @@ registerBlockType( 'magicblock/magicblock', {
             props.setAttributes( { href: newHref } );
         }
 
+        function onChangeNewTab ( newNewTab ) {
+            props.setAttributes( { newTab: newNewTab } );
+        }
  
 
         const linkPanels = (
-            <PanelBody title="Link Href">
+            <PanelBody title="Href">
                 <PlainText onChange={onChangeHref} value={href} className="magicblock-plaintext"/>
+                <div className="magicblock-flex magicblock-newtab"> 
+                    <CheckboxControl 
+                        label="Open in new tab"
+                        checked={newTab}
+                        onChange={onChangeNewTab}
+                        /> 
+                </div>
             </PanelBody>
         );
 
@@ -138,11 +154,16 @@ registerBlockType( 'magicblock/magicblock', {
         elemId = props.attributes.elemId, 
         elemClass = props.attributes.elemClass,
         ElemTag = props.attributes.elemTag || "div", 
-        href = props.attributes.href || "";        
+        href = props.attributes.href || "", 
+        newTab = props.attributes.newTab;        
 
         const aProps = {};
         if(ElemTag === "a" && href){
             aProps.href = href;
+            if(newTab) {
+                aProps.target = "_blank";
+                aProps.rel = "noopener noreferrer";
+            }
         }
 
         return (<ElemTag

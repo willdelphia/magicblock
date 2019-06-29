@@ -79,7 +79,8 @@ var _wp$editor = wp.editor,
 var Fragment = wp.element.Fragment;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
-    SelectControl = _wp$components.SelectControl;
+    SelectControl = _wp$components.SelectControl,
+    CheckboxControl = _wp$components.CheckboxControl;
 
 
 var icon = function icon() {
@@ -113,6 +114,9 @@ registerBlockType('magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href'
         },
+        newTab: {
+            type: 'boolean'
+        },
         elemId: {
             type: 'string',
             source: 'attribute',
@@ -132,7 +136,8 @@ registerBlockType('magicblock/magicblock', {
             elemTag = props.attributes.elemTag,
             elemId = props.attributes.elemId,
             elemClass = props.attributes.elemClass,
-            href = props.attributes.href;
+            href = props.attributes.href,
+            newTab = props.attributes.newTab;
 
         function convertClassString(input) {
             return input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -158,10 +163,23 @@ registerBlockType('magicblock/magicblock', {
             props.setAttributes({ href: newHref });
         }
 
+        function onChangeNewTab(newNewTab) {
+            props.setAttributes({ newTab: newNewTab });
+        }
+
         var linkPanels = wp.element.createElement(
             PanelBody,
-            { title: "Link Href" },
-            wp.element.createElement(PlainText, { onChange: onChangeHref, value: href, className: "magicblock-plaintext" })
+            { title: "Href" },
+            wp.element.createElement(PlainText, { onChange: onChangeHref, value: href, className: "magicblock-plaintext" }),
+            wp.element.createElement(
+                "div",
+                { className: "magicblock-flex magicblock-newtab" },
+                wp.element.createElement(CheckboxControl, {
+                    label: "Open in new tab",
+                    checked: newTab,
+                    onChange: onChangeNewTab
+                })
+            )
         );
 
         return wp.element.createElement(
@@ -242,11 +260,16 @@ registerBlockType('magicblock/magicblock', {
             elemId = props.attributes.elemId,
             elemClass = props.attributes.elemClass,
             ElemTag = props.attributes.elemTag || "div",
-            href = props.attributes.href || "";
+            href = props.attributes.href || "",
+            newTab = props.attributes.newTab;
 
         var aProps = {};
         if (ElemTag === "a" && href) {
             aProps.href = href;
+            if (newTab) {
+                aProps.target = "_blank";
+                aProps.rel = "noopener noreferrer";
+            }
         }
 
         return wp.element.createElement(

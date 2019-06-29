@@ -47,3 +47,12 @@
 .magicblock-id-span {
     background: rgba(230, 186, 173, 0.214);
 }
+
+.magicblock-newtab {
+    margin-top: 1em;
+}
+
+.edit-post-settings-sidebar__panel-block .components-panel__body .magicblock-newtab .components-base-control {
+    margin-bottom: .3em;
+}
+

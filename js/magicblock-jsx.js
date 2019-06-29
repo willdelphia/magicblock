@@ -106,6 +106,10 @@ registerBlockType( 'magicblock/magicblock', {
                                     { label: "a", value: "a"}
                                      ]} 
                                      /> 
+                        {  elemTag === "a" ? (<div>
+                                                <strong>Please note:</strong> it is <a href="https://www.w3.org/TR/html5/text-level-semantics.html#the-a-element" target="_blank">invalid HTML</a> to nest an `a` tag inside another `a` tag. If you do this, browsers will render it in unexpected ways. 
+                                            </div>) : null }
+
                      </PanelBody>
                      {  elemTag === "a" ? linkPanels : null }
                      <PanelBody title="ID">

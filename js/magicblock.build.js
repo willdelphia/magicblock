@@ -174,7 +174,23 @@ registerBlockType('magicblock/magicblock', {
                     PanelBody,
                     { title: "Element Type" },
                     wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "div", value: "div" }, { label: "section", value: 'section' }, { label: "main", value: 'main' }, { label: "aside", value: 'aside' }, { label: "article", value: 'article' }, { label: "header", value: 'header' }, { label: "footer", value: 'footer' }, { label: "nav", value: 'nav' }, { label: "dl", value: 'dl' }, { label: "dd", value: 'dd' }, { label: "dt", value: 'dt' }, { label: "a", value: "a" }]
-                    })
+                    }),
+                    elemTag === "a" ? wp.element.createElement(
+                        "div",
+                        null,
+                        wp.element.createElement(
+                            "strong",
+                            null,
+                            "Please note:"
+                        ),
+                        " it is ",
+                        wp.element.createElement(
+                            "a",
+                            { href: "https://www.w3.org/TR/html5/text-level-semantics.html#the-a-element", target: "_blank" },
+                            "invalid HTML"
+                        ),
+                        " to nest an `a` tag inside another `a` tag. If you do this, browsers will render it in unexpected ways."
+                    ) : null
                 ),
                 elemTag === "a" ? linkPanels : null,
                 wp.element.createElement(

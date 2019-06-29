@@ -2,7 +2,7 @@
 /*
 Plugin Name:  Magic Block
 Description: Registers a container block with the  WP5+ (Gutenberg) editor. This block has settings for element type (div, section, etc), id, classname, and style (inline css). 
-Version:      1.1
+Version:      1.1.1
 Author:       Will Delphia
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html

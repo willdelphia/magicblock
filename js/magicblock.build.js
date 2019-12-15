@@ -69,6 +69,8 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 console.log('magicblock is up and running');
 
 var registerBlockType = wp.blocks.registerBlockType;
@@ -80,7 +82,8 @@ var Fragment = wp.element.Fragment;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     SelectControl = _wp$components.SelectControl,
-    CheckboxControl = _wp$components.CheckboxControl;
+    CheckboxControl = _wp$components.CheckboxControl,
+    Button = _wp$components.Button;
 
 
 var icon = function icon() {
@@ -114,6 +117,9 @@ registerBlockType('magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href'
         },
+        dataAttrs: {
+            type: 'array'
+        },
         newTab: {
             type: 'boolean'
         },
@@ -137,7 +143,8 @@ registerBlockType('magicblock/magicblock', {
             elemId = props.attributes.elemId,
             elemClass = props.attributes.elemClass,
             href = props.attributes.href,
-            newTab = props.attributes.newTab;
+            newTab = props.attributes.newTab,
+            dataAttrs = props.attributes.dataAttrs;
 
         function convertClassString(input) {
             return input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -167,6 +174,41 @@ registerBlockType('magicblock/magicblock', {
             props.setAttributes({ newTab: newNewTab });
         }
 
+        function addNewDataAttr() {
+            var newDataAttrArray = void 0;
+            if (dataAttrs) {
+                newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
+                newDataAttrArray.push({
+                    key: '',
+                    value: ''
+                });
+            } else {
+                newDataAttrArray = [{
+                    key: '',
+                    value: ''
+                }];
+            }
+            props.setAttributes({ dataAttrs: newDataAttrArray });
+        }
+
+        function deleteDataAttr(index) {
+            var newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
+            newDataAttrArray.splice(index, 1);
+            props.setAttributes({ dataAttrs: newDataAttrArray });
+        }
+
+        function setKeyForDataAttrs(index, newKey) {
+            var newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
+            newDataAttrArray[index].key = newKey.replace(/[^\w-]/, '');
+            props.setAttributes({ dataAttrs: newDataAttrArray });
+        }
+
+        function setValueForDataAttrs(index, newValue) {
+            var newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
+            newDataAttrArray[index].value = newValue.replace(/"/, '');
+            props.setAttributes({ dataAttrs: newDataAttrArray });
+        }
+
         var linkPanels = wp.element.createElement(
             PanelBody,
             { title: "Href" },
@@ -191,7 +233,7 @@ registerBlockType('magicblock/magicblock', {
                 wp.element.createElement(
                     PanelBody,
                     { title: "Element Type" },
-                    wp.element.createElement(SelectControl, { label: "Tag", value: elemTag, onChange: onChangeElem, options: [{ label: "div", value: "div" }, { label: "section", value: 'section' }, { label: "main", value: 'main' }, { label: "aside", value: 'aside' }, { label: "article", value: 'article' }, { label: "header", value: 'header' }, { label: "footer", value: 'footer' }, { label: "nav", value: 'nav' }, { label: "dl", value: 'dl' }, { label: "dd", value: 'dd' }, { label: "dt", value: 'dt' }, { label: "a", value: "a" }]
+                    wp.element.createElement(SelectControl, { value: elemTag, onChange: onChangeElem, options: [{ label: "div", value: "div" }, { label: "section", value: 'section' }, { label: "main", value: 'main' }, { label: "aside", value: 'aside' }, { label: "article", value: 'article' }, { label: "header", value: 'header' }, { label: "footer", value: 'footer' }, { label: "nav", value: 'nav' }, { label: "dl", value: 'dl' }, { label: "dd", value: 'dd' }, { label: "dt", value: 'dt' }, { label: "a", value: "a" }]
                     }),
                     elemTag === "a" ? wp.element.createElement(
                         "div",
@@ -225,6 +267,65 @@ registerBlockType('magicblock/magicblock', {
                     PanelBody,
                     { title: "Inline CSS" },
                     wp.element.createElement(PlainText, { onChange: onChangeInlineStyle, value: inlineSytle, className: "magicblock-plaintext" })
+                ),
+                wp.element.createElement(
+                    PanelBody,
+                    { title: "Custom Data Attributes" },
+                    dataAttrs && dataAttrs.map(function (attr, index) {
+                        return wp.element.createElement(
+                            "div",
+                            { className: "magicblock-data-attr-pair" },
+                            wp.element.createElement(
+                                "div",
+                                null,
+                                wp.element.createElement(
+                                    "div",
+                                    { className: "magicblock-data-attr-label" },
+                                    "Key"
+                                ),
+                                wp.element.createElement(
+                                    "div",
+                                    { className: "magicblock-data-attr-key-field" },
+                                    wp.element.createElement(
+                                        "div",
+                                        { className: "magicblock-data-attr-key-field-prefix" },
+                                        "data-"
+                                    ),
+                                    wp.element.createElement(PlainText, { onChange: function onChange(newKey) {
+                                            return setKeyForDataAttrs(index, newKey);
+                                        }, value: attr.key, className: "magicblock-plaintext" })
+                                )
+                            ),
+                            wp.element.createElement(
+                                "div",
+                                null,
+                                wp.element.createElement(
+                                    "div",
+                                    { className: "magicblock-data-attr-label" },
+                                    "Value"
+                                ),
+                                wp.element.createElement(PlainText, { onChange: function onChange(newValue) {
+                                        return setValueForDataAttrs(index, newValue);
+                                    }, value: attr.value, className: "magicblock-plaintext" })
+                            ),
+                            wp.element.createElement(
+                                Button,
+                                { isSmall: true, onClick: function onClick() {
+                                        return deleteDataAttr(index);
+                                    } },
+                                "Delete"
+                            )
+                        );
+                    }),
+                    wp.element.createElement(
+                        "div",
+                        { "class": "magic-block-right-align" },
+                        wp.element.createElement(
+                            Button,
+                            { isSmall: true, onClick: addNewDataAttr },
+                            "New Attribute"
+                        )
+                    )
                 )
             ),
             wp.element.createElement(
@@ -261,7 +362,8 @@ registerBlockType('magicblock/magicblock', {
             elemClass = props.attributes.elemClass,
             ElemTag = props.attributes.elemTag || "div",
             href = props.attributes.href || "",
-            newTab = props.attributes.newTab;
+            newTab = props.attributes.newTab,
+            dataAttrs = props.attributes.dataAttrs;
 
         var aProps = {};
         if (ElemTag === "a" && href) {
@@ -272,13 +374,22 @@ registerBlockType('magicblock/magicblock', {
             }
         }
 
+        var preparedDataAttrs = {};
+        if (dataAttrs) {
+            dataAttrs.forEach(function (pair) {
+                if (pair.key.length > 0) {
+                    preparedDataAttrs['data-' + pair.key] = pair.value;
+                }
+            });
+        }
+
         return wp.element.createElement(
             ElemTag,
             _extends({
                 className: elemClass,
                 style: inlineSytle,
                 id: elemId
-            }, aProps),
+            }, aProps, preparedDataAttrs),
             wp.element.createElement(InnerBlocks.Content, null)
         );
     }

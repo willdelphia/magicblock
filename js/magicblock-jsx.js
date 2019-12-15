@@ -3,8 +3,7 @@ console.log('magicblock is up and running');
 const { registerBlockType } = wp.blocks;
 const { InspectorControls, InnerBlocks, PlainText} = wp.editor;
 const { Fragment } = wp.element;
-const { PanelBody, SelectControl, CheckboxControl } = wp.components;
-
+const { PanelBody, SelectControl, CheckboxControl, Button} = wp.components;
 
 const icon = () => {
    return (<svg width="20" height="20" viewBox="0 0 20 20">
@@ -35,6 +34,9 @@ registerBlockType( 'magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href',
         },
+        dataAttrs: {
+            type: 'array'
+        },
         newTab: {
             type: 'boolean'
         },
@@ -54,18 +56,19 @@ registerBlockType( 'magicblock/magicblock', {
 
     edit:  props => {
         let inlineSytle = props.attributes.inlineStyle,
-                elemTag = props.attributes.elemTag,
-                elemId = props.attributes.elemId,
-                elemClass = props.attributes.elemClass,
-                href = props.attributes.href,
-                newTab = props.attributes.newTab;
+            elemTag = props.attributes.elemTag,
+            elemId = props.attributes.elemId,
+            elemClass = props.attributes.elemClass,
+            href = props.attributes.href,
+            newTab = props.attributes.newTab, 
+            dataAttrs = props.attributes.dataAttrs;
 
 
-        function convertClassString(input) {
+        function convertClassString ( input ) {
             return  input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
         }
 
-        function onChangeElem( newElem ) {
+        function onChangeElem ( newElem ) {
             props.setAttributes( { elemTag: newElem } );
         }
 
@@ -88,7 +91,43 @@ registerBlockType( 'magicblock/magicblock', {
         function onChangeNewTab ( newNewTab ) {
             props.setAttributes( { newTab: newNewTab } );
         }
- 
+
+        function addNewDataAttr () {
+            let newDataAttrArray;
+            if(dataAttrs){
+                newDataAttrArray = [...dataAttrs];
+                newDataAttrArray.push({
+                    key: '',
+                    value: ''
+                });
+            }
+            else {
+                newDataAttrArray = [{
+                    key: '',
+                    value: ''
+                }];
+            }
+            props.setAttributes({dataAttrs: newDataAttrArray});
+        }
+
+        function deleteDataAttr (index) {
+            const newDataAttrArray = [...dataAttrs];
+            newDataAttrArray.splice(index, 1);
+            props.setAttributes({dataAttrs: newDataAttrArray});
+        }
+
+        function setKeyForDataAttrs ( index, newKey ) {
+            const newDataAttrArray = [...dataAttrs];
+            newDataAttrArray[index].key = newKey.replace(/[^\w-]/, '');
+            props.setAttributes({dataAttrs: newDataAttrArray});
+        }
+
+        function setValueForDataAttrs ( index, newValue,  ) {
+            const newDataAttrArray = [...dataAttrs];
+            newDataAttrArray[index].value = newValue.replace(/"/, '');
+            props.setAttributes({dataAttrs: newDataAttrArray});
+        }
+  
 
         const linkPanels = (
             <PanelBody title="Href">
@@ -107,7 +146,7 @@ registerBlockType( 'magicblock/magicblock', {
             <Fragment>
                 <InspectorControls>
                      <PanelBody title="Element Type">
-                        <SelectControl label="Tag" value={elemTag} onChange={onChangeElem} options={[ 
+                        <SelectControl value={elemTag} onChange={onChangeElem} options={[ 
                                     { label: "div", value: "div"},
                                     { label: "section", value: 'section'},
                                     { label: "main", value: 'main'},
@@ -137,6 +176,25 @@ registerBlockType( 'magicblock/magicblock', {
                      <PanelBody title="Inline CSS">
                         <PlainText onChange={onChangeInlineStyle} value={inlineSytle} className="magicblock-plaintext"/>
                      </PanelBody>
+                     <PanelBody title="Custom Data Attributes">
+                         {dataAttrs && dataAttrs.map((attr, index) => (
+                             <div className="magicblock-data-attr-pair">
+                                <div>
+                                     <div className="magicblock-data-attr-label">Key</div>
+                                     <div className="magicblock-data-attr-key-field">
+                                         <div className="magicblock-data-attr-key-field-prefix">data-</div>
+                                         <PlainText onChange={newKey => setKeyForDataAttrs(index, newKey)} value={attr.key} className="magicblock-plaintext"/>
+                                     </div>
+                                </div>
+                                <div>
+                                    <div className="magicblock-data-attr-label">Value</div>
+                                    <PlainText onChange={newValue => setValueForDataAttrs(index, newValue)} value={attr.value} className="magicblock-plaintext"/>
+                                </div>
+                                <Button isSmall={true} onClick={() => deleteDataAttr(index)}>Delete</Button>
+                             </div>
+                         ))}
+                        <div class="magic-block-right-align"><Button isSmall={true} onClick={addNewDataAttr}>New Attribute</Button></div>
+                     </PanelBody>
                 </InspectorControls>
                 <div className="magicblock-editor">
                    <div className="magicblock-label">
@@ -155,7 +213,8 @@ registerBlockType( 'magicblock/magicblock', {
         elemClass = props.attributes.elemClass,
         ElemTag = props.attributes.elemTag || "div", 
         href = props.attributes.href || "", 
-        newTab = props.attributes.newTab;        
+        newTab = props.attributes.newTab,
+        dataAttrs = props.attributes.dataAttrs;       
 
         const aProps = {};
         if(ElemTag === "a" && href){
@@ -166,11 +225,24 @@ registerBlockType( 'magicblock/magicblock', {
             }
         }
 
+        const preparedDataAttrs = {};
+        if(dataAttrs){
+            dataAttrs.forEach(pair => {
+                if(pair.key.length > 0){
+                    preparedDataAttrs['data-' + pair.key] = pair.value;
+                }
+            })
+        }
+     
+        
+       
+
         return (<ElemTag
                 className={elemClass} 
                 style={inlineSytle} 
                 id={elemId}
                 {...aProps}
+                {...preparedDataAttrs}
                 >
                     <InnerBlocks.Content/>
                 </ElemTag>);

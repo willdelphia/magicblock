@@ -56,27 +56,27 @@
     margin-bottom: .3em;
 }
 
-.magicblock-data-attr-pair {
+.magicblock-custom-attr-pair {
     margin-bottom: 10px;
     padding: 1em;
     border-radius: 5px;
     border: solid 1px grey;
 }
 
-.magicblock-data-attr-pair > div {
+.magicblock-custom-attr-pair > div {
     margin-bottom: 1em;
 }
 
-.magicblock-data-attr-key-field {
+.magicblock-custom-attr-key-field {
     display: flex;
     align-items: center;
 }
 
-.magicblock-data-attr-key-field-prefix {
+.magicblock-custom-attr-key-field-prefix {
     margin-right: .5em;
 }
 
-.magicblock-data-attr-label {
+.magicblock-custom-attr-label {
     font-weight: 600;
     margin-bottom: .5em;
 }

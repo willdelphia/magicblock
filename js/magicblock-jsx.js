@@ -34,7 +34,7 @@ registerBlockType( 'magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href',
         },
-        dataAttrs: {
+        customAttrs: {
             type: 'array'
         },
         newTab: {
@@ -61,7 +61,7 @@ registerBlockType( 'magicblock/magicblock', {
             elemClass = props.attributes.elemClass,
             href = props.attributes.href,
             newTab = props.attributes.newTab, 
-            dataAttrs = props.attributes.dataAttrs;
+            customAttrs = props.attributes.customAttrs;
 
 
         function convertClassString ( input ) {
@@ -92,40 +92,40 @@ registerBlockType( 'magicblock/magicblock', {
             props.setAttributes( { newTab: newNewTab } );
         }
 
-        function addNewDataAttr () {
-            let newDataAttrArray;
-            if(dataAttrs){
-                newDataAttrArray = [...dataAttrs];
-                newDataAttrArray.push({
+        function addNewCustomAttr () {
+            let newCustomAttrArray;
+            if(customAttrs){
+                newCustomAttrArray = [...customAttrs];
+                newCustomAttrArray.push({
                     key: '',
                     value: ''
                 });
             }
             else {
-                newDataAttrArray = [{
+                newCustomAttrArray = [{
                     key: '',
                     value: ''
                 }];
             }
-            props.setAttributes({dataAttrs: newDataAttrArray});
+            props.setAttributes({customAttrs: newCustomAttrArray});
         }
 
-        function deleteDataAttr (index) {
-            const newDataAttrArray = [...dataAttrs];
-            newDataAttrArray.splice(index, 1);
-            props.setAttributes({dataAttrs: newDataAttrArray});
+        function deleteCustomAttr (index) {
+            const newCustomAttrArray = [...customAttrs];
+            newCustomAttrArray.splice(index, 1);
+            props.setAttributes({customAttrs: newCustomAttrArray});
         }
 
-        function setKeyForDataAttrs ( index, newKey ) {
-            const newDataAttrArray = [...dataAttrs];
-            newDataAttrArray[index].key = newKey.replace(/[^\w-]/, '');
-            props.setAttributes({dataAttrs: newDataAttrArray});
+        function setKeyForCustomAttrs ( index, newKey ) {
+            const newCustomAttrArray = [...customAttrs];
+            newCustomAttrArray[index].key = newKey.replace(/[^\w-]/, '');
+            props.setAttributes({customAttrs: newCustomAttrArray});
         }
 
-        function setValueForDataAttrs ( index, newValue,  ) {
-            const newDataAttrArray = [...dataAttrs];
-            newDataAttrArray[index].value = newValue.replace(/"/, '');
-            props.setAttributes({dataAttrs: newDataAttrArray});
+        function setValueForCustomAttrs ( index, newValue,  ) {
+            const newCustomAttrArray = [...customAttrs];
+            newCustomAttrArray[index].value = newValue.replace(/"/, '');
+            props.setAttributes({customAttrs: newCustomAttrArray});
         }
   
 
@@ -176,24 +176,23 @@ registerBlockType( 'magicblock/magicblock', {
                      <PanelBody title="Inline CSS">
                         <PlainText onChange={onChangeInlineStyle} value={inlineSytle} className="magicblock-plaintext"/>
                      </PanelBody>
-                     <PanelBody title="Custom Data Attributes">
-                         {dataAttrs && dataAttrs.map((attr, index) => (
-                             <div className="magicblock-data-attr-pair">
+                     <PanelBody title="Custom Attributes">
+                         {customAttrs && customAttrs.map((attr, index) => (
+                             <div className="magicblock-custom-attr-pair">
                                 <div>
-                                     <div className="magicblock-data-attr-label">Key</div>
-                                     <div className="magicblock-data-attr-key-field">
-                                         <div className="magicblock-data-attr-key-field-prefix">data-</div>
-                                         <PlainText onChange={newKey => setKeyForDataAttrs(index, newKey)} value={attr.key} className="magicblock-plaintext"/>
+                                     <div className="magicblock-custom-attr-label">Name</div>
+                                     <div className="magicblock-custom-attr-key-field">
+                                         <PlainText onChange={newKey => setKeyForCustomAttrs(index, newKey)} value={attr.key} className="magicblock-plaintext"/>
                                      </div>
                                 </div>
                                 <div>
-                                    <div className="magicblock-data-attr-label">Value</div>
-                                    <PlainText onChange={newValue => setValueForDataAttrs(index, newValue)} value={attr.value} className="magicblock-plaintext"/>
+                                    <div className="magicblock-custom-attr-label">Value</div>
+                                    <PlainText onChange={newValue => setValueForCustomAttrs(index, newValue)} value={attr.value} className="magicblock-plaintext"/>
                                 </div>
-                                <Button isSmall={true} onClick={() => deleteDataAttr(index)}>Delete</Button>
+                                <Button isSmall={true} onClick={() => deleteCustomAttr(index)}>Delete</Button>
                              </div>
                          ))}
-                        <div class="magic-block-right-align"><Button isSmall={true} onClick={addNewDataAttr}>New Attribute</Button></div>
+                        <div class="magic-block-right-align"><Button isSmall={true} onClick={addNewCustomAttr}>New Attribute</Button></div>
                      </PanelBody>
                 </InspectorControls>
                 <div className="magicblock-editor">
@@ -214,7 +213,7 @@ registerBlockType( 'magicblock/magicblock', {
         ElemTag = props.attributes.elemTag || "div", 
         href = props.attributes.href || "", 
         newTab = props.attributes.newTab,
-        dataAttrs = props.attributes.dataAttrs;       
+        customAttrs = props.attributes.customAttrs;       
 
         const aProps = {};
         if(ElemTag === "a" && href){
@@ -225,11 +224,11 @@ registerBlockType( 'magicblock/magicblock', {
             }
         }
 
-        const preparedDataAttrs = {};
-        if(dataAttrs){
-            dataAttrs.forEach(pair => {
+        const preparedCustomAttrs = {};
+        if(customAttrs){
+            customAttrs.forEach(pair => {
                 if(pair.key.length > 0){
-                    preparedDataAttrs['data-' + pair.key] = pair.value;
+                    preparedCustomAttrs[pair.key] = pair.value;
                 }
             })
         }
@@ -242,7 +241,7 @@ registerBlockType( 'magicblock/magicblock', {
                 style={inlineSytle} 
                 id={elemId}
                 {...aProps}
-                {...preparedDataAttrs}
+                {...preparedCustomAttrs}
                 >
                     <InnerBlocks.Content/>
                 </ElemTag>);

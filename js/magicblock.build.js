@@ -117,7 +117,7 @@ registerBlockType('magicblock/magicblock', {
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href'
         },
-        dataAttrs: {
+        customAttrs: {
             type: 'array'
         },
         newTab: {
@@ -144,7 +144,7 @@ registerBlockType('magicblock/magicblock', {
             elemClass = props.attributes.elemClass,
             href = props.attributes.href,
             newTab = props.attributes.newTab,
-            dataAttrs = props.attributes.dataAttrs;
+            customAttrs = props.attributes.customAttrs;
 
         function convertClassString(input) {
             return input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -174,39 +174,39 @@ registerBlockType('magicblock/magicblock', {
             props.setAttributes({ newTab: newNewTab });
         }
 
-        function addNewDataAttr() {
-            var newDataAttrArray = void 0;
-            if (dataAttrs) {
-                newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
-                newDataAttrArray.push({
+        function addNewCustomAttr() {
+            var newCustomAttrArray = void 0;
+            if (customAttrs) {
+                newCustomAttrArray = [].concat(_toConsumableArray(customAttrs));
+                newCustomAttrArray.push({
                     key: '',
                     value: ''
                 });
             } else {
-                newDataAttrArray = [{
+                newCustomAttrArray = [{
                     key: '',
                     value: ''
                 }];
             }
-            props.setAttributes({ dataAttrs: newDataAttrArray });
+            props.setAttributes({ customAttrs: newCustomAttrArray });
         }
 
-        function deleteDataAttr(index) {
-            var newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
-            newDataAttrArray.splice(index, 1);
-            props.setAttributes({ dataAttrs: newDataAttrArray });
+        function deleteCustomAttr(index) {
+            var newCustomAttrArray = [].concat(_toConsumableArray(customAttrs));
+            newCustomAttrArray.splice(index, 1);
+            props.setAttributes({ customAttrs: newCustomAttrArray });
         }
 
-        function setKeyForDataAttrs(index, newKey) {
-            var newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
-            newDataAttrArray[index].key = newKey.replace(/[^\w-]/, '');
-            props.setAttributes({ dataAttrs: newDataAttrArray });
+        function setKeyForCustomAttrs(index, newKey) {
+            var newCustomAttrArray = [].concat(_toConsumableArray(customAttrs));
+            newCustomAttrArray[index].key = newKey.replace(/[^\w-]/, '');
+            props.setAttributes({ customAttrs: newCustomAttrArray });
         }
 
-        function setValueForDataAttrs(index, newValue) {
-            var newDataAttrArray = [].concat(_toConsumableArray(dataAttrs));
-            newDataAttrArray[index].value = newValue.replace(/"/, '');
-            props.setAttributes({ dataAttrs: newDataAttrArray });
+        function setValueForCustomAttrs(index, newValue) {
+            var newCustomAttrArray = [].concat(_toConsumableArray(customAttrs));
+            newCustomAttrArray[index].value = newValue.replace(/"/, '');
+            props.setAttributes({ customAttrs: newCustomAttrArray });
         }
 
         var linkPanels = wp.element.createElement(
@@ -270,29 +270,24 @@ registerBlockType('magicblock/magicblock', {
                 ),
                 wp.element.createElement(
                     PanelBody,
-                    { title: "Custom Data Attributes" },
-                    dataAttrs && dataAttrs.map(function (attr, index) {
+                    { title: "Custom Attributes" },
+                    customAttrs && customAttrs.map(function (attr, index) {
                         return wp.element.createElement(
                             "div",
-                            { className: "magicblock-data-attr-pair" },
+                            { className: "magicblock-custom-attr-pair" },
                             wp.element.createElement(
                                 "div",
                                 null,
                                 wp.element.createElement(
                                     "div",
-                                    { className: "magicblock-data-attr-label" },
-                                    "Key"
+                                    { className: "magicblock-custom-attr-label" },
+                                    "Name"
                                 ),
                                 wp.element.createElement(
                                     "div",
-                                    { className: "magicblock-data-attr-key-field" },
-                                    wp.element.createElement(
-                                        "div",
-                                        { className: "magicblock-data-attr-key-field-prefix" },
-                                        "data-"
-                                    ),
+                                    { className: "magicblock-custom-attr-key-field" },
                                     wp.element.createElement(PlainText, { onChange: function onChange(newKey) {
-                                            return setKeyForDataAttrs(index, newKey);
+                                            return setKeyForCustomAttrs(index, newKey);
                                         }, value: attr.key, className: "magicblock-plaintext" })
                                 )
                             ),
@@ -301,17 +296,17 @@ registerBlockType('magicblock/magicblock', {
                                 null,
                                 wp.element.createElement(
                                     "div",
-                                    { className: "magicblock-data-attr-label" },
+                                    { className: "magicblock-custom-attr-label" },
                                     "Value"
                                 ),
                                 wp.element.createElement(PlainText, { onChange: function onChange(newValue) {
-                                        return setValueForDataAttrs(index, newValue);
+                                        return setValueForCustomAttrs(index, newValue);
                                     }, value: attr.value, className: "magicblock-plaintext" })
                             ),
                             wp.element.createElement(
                                 Button,
                                 { isSmall: true, onClick: function onClick() {
-                                        return deleteDataAttr(index);
+                                        return deleteCustomAttr(index);
                                     } },
                                 "Delete"
                             )
@@ -322,7 +317,7 @@ registerBlockType('magicblock/magicblock', {
                         { "class": "magic-block-right-align" },
                         wp.element.createElement(
                             Button,
-                            { isSmall: true, onClick: addNewDataAttr },
+                            { isSmall: true, onClick: addNewCustomAttr },
                             "New Attribute"
                         )
                     )
@@ -363,7 +358,7 @@ registerBlockType('magicblock/magicblock', {
             ElemTag = props.attributes.elemTag || "div",
             href = props.attributes.href || "",
             newTab = props.attributes.newTab,
-            dataAttrs = props.attributes.dataAttrs;
+            customAttrs = props.attributes.customAttrs;
 
         var aProps = {};
         if (ElemTag === "a" && href) {
@@ -374,11 +369,11 @@ registerBlockType('magicblock/magicblock', {
             }
         }
 
-        var preparedDataAttrs = {};
-        if (dataAttrs) {
-            dataAttrs.forEach(function (pair) {
+        var preparedCustomAttrs = {};
+        if (customAttrs) {
+            customAttrs.forEach(function (pair) {
                 if (pair.key.length > 0) {
-                    preparedDataAttrs['data-' + pair.key] = pair.value;
+                    preparedCustomAttrs[pair.key] = pair.value;
                 }
             });
         }
@@ -389,7 +384,7 @@ registerBlockType('magicblock/magicblock', {
                 className: elemClass,
                 style: inlineSytle,
                 id: elemId
-            }, aProps, preparedDataAttrs),
+            }, aProps, preparedCustomAttrs),
             wp.element.createElement(InnerBlocks.Content, null)
         );
     }

@@ -228,7 +228,7 @@ registerBlockType( 'magicblock/magicblock', {
         if(customAttrs){
             customAttrs.forEach(pair => {
                 if(pair.key.length > 0){
-                    preparedCustomAttrs[pair.key] = pair.value;
+                    preparedCustomAttrs[pair.key.replace(/"  *"|^-|^_|^[0-9]|[^\w-]/g, '')] = pair.value.replace(/"/, '');
                 }
             })
         }

@@ -199,7 +199,7 @@ registerBlockType('magicblock/magicblock', {
 
         function setKeyForCustomAttrs(index, newKey) {
             var newCustomAttrArray = [].concat(_toConsumableArray(customAttrs));
-            newCustomAttrArray[index].key = newKey.replace(/^-|^_|^[0-9]|[^\w-]/g, '');
+            newCustomAttrArray[index].key = newKey.replace(/"  *"|^-|^_|^[0-9]|[^\w-]/g, '');
             props.setAttributes({ customAttrs: newCustomAttrArray });
         }
 

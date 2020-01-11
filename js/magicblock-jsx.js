@@ -232,9 +232,6 @@ registerBlockType( 'magicblock/magicblock', {
                 }
             })
         }
-     
-        
-       
 
         return (<ElemTag
                 className={elemClass} 

@@ -213,7 +213,7 @@ registerBlockType( 'magicblock/magicblock', {
     },
     save: props => {
         
-        const { inlineSytle, elemId, elemClass, newTab, customAttrs } =   props.attributes;
+        const { inlineStyle, elemId, elemClass, newTab, customAttrs } =   props.attributes;
         const ElemTag = props.attributes.elemTag || "div";
         const href = props.attributes.href || "";
 
@@ -237,7 +237,7 @@ registerBlockType( 'magicblock/magicblock', {
 
         return (<ElemTag
                     className={elemClass} 
-                    style={inlineSytle} 
+                    style={inlineStyle} 
                     id={elemId}
                     {...aProps}
                     {...preparedCustomAttrs}

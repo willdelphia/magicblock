@@ -354,7 +354,7 @@ registerBlockType('magicblock/magicblock', {
     },
     save: function save(props) {
         var _props$attributes2 = props.attributes,
-            inlineSytle = _props$attributes2.inlineSytle,
+            inlineStyle = _props$attributes2.inlineStyle,
             elemId = _props$attributes2.elemId,
             elemClass = _props$attributes2.elemClass,
             newTab = _props$attributes2.newTab,
@@ -385,7 +385,7 @@ registerBlockType('magicblock/magicblock', {
             ElemTag,
             _extends({
                 className: elemClass,
-                style: inlineSytle,
+                style: inlineStyle,
                 id: elemId
             }, aProps, preparedCustomAttrs),
             wp.element.createElement(InnerBlocks.Content, null)

@@ -138,13 +138,15 @@ registerBlockType('magicblock/magicblock', {
     },
 
     edit: function edit(props) {
-        var inlineSytle = props.attributes.inlineStyle,
-            elemTag = props.attributes.elemTag,
-            elemId = props.attributes.elemId,
-            elemClass = props.attributes.elemClass,
-            href = props.attributes.href,
-            newTab = props.attributes.newTab,
-            customAttrs = props.attributes.customAttrs;
+        var _props$attributes = props.attributes,
+            inlineSytle = _props$attributes.inlineSytle,
+            elemTag = _props$attributes.elemTag,
+            elemId = _props$attributes.elemId,
+            elemClass = _props$attributes.elemClass,
+            href = _props$attributes.href,
+            newTab = _props$attributes.newTab,
+            customAttrs = _props$attributes.customAttrs;
+
 
         function convertClassString(input) {
             return input.replace(/\s+$/g, '').replace(/[ ]+/g, ".");
@@ -177,11 +179,10 @@ registerBlockType('magicblock/magicblock', {
         function addNewCustomAttr() {
             var newCustomAttrArray = void 0;
             if (customAttrs) {
-                newCustomAttrArray = [].concat(_toConsumableArray(customAttrs));
-                newCustomAttrArray.push({
+                newCustomAttrArray = [].concat(_toConsumableArray(customAttrs), [{
                     key: '',
                     value: ''
-                });
+                }]);
             } else {
                 newCustomAttrArray = [{
                     key: '',
@@ -352,13 +353,15 @@ registerBlockType('magicblock/magicblock', {
         );
     },
     save: function save(props) {
-        var inlineSytle = props.attributes.inlineStyle,
-            elemId = props.attributes.elemId,
-            elemClass = props.attributes.elemClass,
-            ElemTag = props.attributes.elemTag || "div",
-            href = props.attributes.href || "",
-            newTab = props.attributes.newTab,
-            customAttrs = props.attributes.customAttrs;
+        var _props$attributes2 = props.attributes,
+            inlineSytle = _props$attributes2.inlineSytle,
+            elemId = _props$attributes2.elemId,
+            elemClass = _props$attributes2.elemClass,
+            newTab = _props$attributes2.newTab,
+            customAttrs = _props$attributes2.customAttrs;
+
+        var ElemTag = props.attributes.elemTag || "div";
+        var href = props.attributes.href || "";
 
         var aProps = {};
         if (ElemTag === "a" && href) {

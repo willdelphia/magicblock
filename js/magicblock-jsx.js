@@ -55,13 +55,16 @@ registerBlockType( 'magicblock/magicblock', {
     },
 
     edit:  props => {
-        let inlineSytle = props.attributes.inlineStyle,
-            elemTag = props.attributes.elemTag,
-            elemId = props.attributes.elemId,
-            elemClass = props.attributes.elemClass,
-            href = props.attributes.href,
-            newTab = props.attributes.newTab, 
-            customAttrs = props.attributes.customAttrs;
+
+        const {
+            inlineSytle,
+            elemTag,
+            elemId,
+            elemClass,
+            href,
+            newTab,
+            customAttrs
+        } = props.attributes;
 
 
         function convertClassString ( input ) {
@@ -95,11 +98,13 @@ registerBlockType( 'magicblock/magicblock', {
         function addNewCustomAttr () {
             let newCustomAttrArray;
             if(customAttrs){
-                newCustomAttrArray = [...customAttrs];
-                newCustomAttrArray.push({
-                    key: '',
-                    value: ''
-                });
+                newCustomAttrArray = [
+                    ...customAttrs, 
+                    {
+                        key: '',
+                        value: ''
+                    }
+                 ];
             }
             else {
                 newCustomAttrArray = [{
@@ -207,13 +212,10 @@ registerBlockType( 'magicblock/magicblock', {
         );
     },
     save: props => {
-        let inlineSytle = props.attributes.inlineStyle,
-        elemId = props.attributes.elemId, 
-        elemClass = props.attributes.elemClass,
-        ElemTag = props.attributes.elemTag || "div", 
-        href = props.attributes.href || "", 
-        newTab = props.attributes.newTab,
-        customAttrs = props.attributes.customAttrs;       
+        
+        const { inlineSytle, elemId, elemClass, newTab, customAttrs } =   props.attributes;
+        const ElemTag = props.attributes.elemTag || "div";
+        const href = props.attributes.href || "";
 
         const aProps = {};
         if(ElemTag === "a" && href){
@@ -234,11 +236,11 @@ registerBlockType( 'magicblock/magicblock', {
         }
 
         return (<ElemTag
-                className={elemClass} 
-                style={inlineSytle} 
-                id={elemId}
-                {...aProps}
-                {...preparedCustomAttrs}
+                    className={elemClass} 
+                    style={inlineSytle} 
+                    id={elemId}
+                    {...aProps}
+                    {...preparedCustomAttrs}
                 >
                     <InnerBlocks.Content/>
                 </ElemTag>);

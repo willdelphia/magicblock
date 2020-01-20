@@ -2,7 +2,7 @@
 /*
 Plugin Name:  Magic Block
 Description: Registers a container block. It has settings for element, ID, classname, style, and any other attribute. 
-Version:      1.2
+Version:      1.2.2
 Author:       Will Delphia
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html

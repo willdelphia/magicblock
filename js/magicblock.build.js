@@ -74,16 +74,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 console.log('magicblock is up and running');
 
 var registerBlockType = wp.blocks.registerBlockType;
-var _wp$editor = wp.editor,
-    InspectorControls = _wp$editor.InspectorControls,
-    InnerBlocks = _wp$editor.InnerBlocks,
-    PlainText = _wp$editor.PlainText;
+var _wp$blockEditor = wp.blockEditor,
+    InnerBlocks = _wp$blockEditor.InnerBlocks,
+    InspectorControls = _wp$blockEditor.InspectorControls;
 var Fragment = wp.element.Fragment;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     SelectControl = _wp$components.SelectControl,
     CheckboxControl = _wp$components.CheckboxControl,
-    Button = _wp$components.Button;
+    Button = _wp$components.Button,
+    TextControl = _wp$components.TextControl;
 
 
 var icon = function icon() {
@@ -109,13 +109,15 @@ registerBlockType('magicblock/magicblock', {
             type: 'string',
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
-            attribute: 'style'
+            attribute: 'style',
+            default: ''
         },
         href: {
             type: 'string',
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
-            attribute: 'href'
+            attribute: 'href',
+            default: ''
         },
         customAttrs: {
             type: 'array'
@@ -139,7 +141,7 @@ registerBlockType('magicblock/magicblock', {
 
     edit: function edit(props) {
         var _props$attributes = props.attributes,
-            inlineSytle = _props$attributes.inlineSytle,
+            inlineStyle = _props$attributes.inlineStyle,
             elemTag = _props$attributes.elemTag,
             elemId = _props$attributes.elemId,
             elemClass = _props$attributes.elemClass,
@@ -212,8 +214,8 @@ registerBlockType('magicblock/magicblock', {
 
         var linkPanels = wp.element.createElement(
             PanelBody,
-            { title: "Href" },
-            wp.element.createElement(PlainText, { onChange: onChangeHref, value: href, className: "magicblock-plaintext" }),
+            { title: "Link Attributes" },
+            wp.element.createElement(TextControl, { label: "Href", onChange: onChangeHref, value: href }),
             wp.element.createElement(
                 "div",
                 { className: "magicblock-flex magicblock-newtab" },
@@ -256,18 +258,10 @@ registerBlockType('magicblock/magicblock', {
                 elemTag === "a" ? linkPanels : null,
                 wp.element.createElement(
                     PanelBody,
-                    { title: "ID" },
-                    wp.element.createElement(PlainText, { onChange: onChangeID, value: elemId, className: "magicblock-plaintext" })
-                ),
-                wp.element.createElement(
-                    PanelBody,
-                    { title: "Class(es)" },
-                    wp.element.createElement(PlainText, { onChange: onChangeClass, value: elemClass, className: "magicblock-plaintext" })
-                ),
-                wp.element.createElement(
-                    PanelBody,
-                    { title: "Inline CSS" },
-                    wp.element.createElement(PlainText, { onChange: onChangeInlineStyle, value: inlineSytle, className: "magicblock-plaintext" })
+                    { title: "Standard Attributes" },
+                    wp.element.createElement(TextControl, { label: "ID", value: elemId, onChange: onChangeID }),
+                    wp.element.createElement(TextControl, { label: "Classname (space-seperated)", onChange: onChangeClass, value: elemClass }),
+                    wp.element.createElement(TextControl, { label: "Inline Style", onChange: onChangeInlineStyle, value: inlineStyle })
                 ),
                 wp.element.createElement(
                     PanelBody,
@@ -276,37 +270,15 @@ registerBlockType('magicblock/magicblock', {
                         return wp.element.createElement(
                             "div",
                             { className: "magicblock-custom-attr-pair" },
-                            wp.element.createElement(
-                                "div",
-                                null,
-                                wp.element.createElement(
-                                    "div",
-                                    { className: "magicblock-custom-attr-label" },
-                                    "Name"
-                                ),
-                                wp.element.createElement(
-                                    "div",
-                                    { className: "magicblock-custom-attr-key-field" },
-                                    wp.element.createElement(PlainText, { onChange: function onChange(newKey) {
-                                            return setKeyForCustomAttrs(index, newKey);
-                                        }, value: attr.key, className: "magicblock-plaintext" })
-                                )
-                            ),
-                            wp.element.createElement(
-                                "div",
-                                null,
-                                wp.element.createElement(
-                                    "div",
-                                    { className: "magicblock-custom-attr-label" },
-                                    "Value"
-                                ),
-                                wp.element.createElement(PlainText, { onChange: function onChange(newValue) {
-                                        return setValueForCustomAttrs(index, newValue);
-                                    }, value: attr.value, className: "magicblock-plaintext" })
-                            ),
+                            wp.element.createElement(TextControl, { label: "Name", onChange: function onChange(newKey) {
+                                    return setKeyForCustomAttrs(index, newKey);
+                                }, value: attr.key }),
+                            wp.element.createElement(TextControl, { label: "Value", onChange: function onChange(newValue) {
+                                    return setValueForCustomAttrs(index, newValue);
+                                }, value: attr.value }),
                             wp.element.createElement(
                                 Button,
-                                { isSmall: true, onClick: function onClick() {
+                                { isDestructive: true, onClick: function onClick() {
                                         return deleteCustomAttr(index);
                                     } },
                                 "Delete"
@@ -318,7 +290,7 @@ registerBlockType('magicblock/magicblock', {
                         { "class": "magic-block-right-align" },
                         wp.element.createElement(
                             Button,
-                            { isSmall: true, onClick: addNewCustomAttr },
+                            { isSecondary: true, onClick: addNewCustomAttr },
                             "New Attribute"
                         )
                     )

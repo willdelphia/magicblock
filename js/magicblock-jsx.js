@@ -1,9 +1,10 @@
 console.log('magicblock is up and running');
 
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, InnerBlocks, PlainText} = wp.editor;
+const {InnerBlocks, InspectorControls } =  wp.blockEditor;
 const { Fragment } = wp.element;
-const { PanelBody, SelectControl, CheckboxControl, Button} = wp.components;
+const { PanelBody, SelectControl, CheckboxControl, Button, TextControl} = wp.components;
+
 
 const icon = () => {
    return (<svg width="20" height="20" viewBox="0 0 20 20">
@@ -27,12 +28,14 @@ registerBlockType( 'magicblock/magicblock', {
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'style',
-        }, 
+            default: ''
+        },
         href: {
             type: 'string',
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href',
+            default: ''
         },
         customAttrs: {
             type: 'array'
@@ -57,7 +60,7 @@ registerBlockType( 'magicblock/magicblock', {
     edit:  props => {
 
         const {
-            inlineSytle,
+            inlineStyle,
             elemTag,
             elemId,
             elemClass,
@@ -135,8 +138,8 @@ registerBlockType( 'magicblock/magicblock', {
   
 
         const linkPanels = (
-            <PanelBody title="Href">
-                <PlainText onChange={onChangeHref} value={href} className="magicblock-plaintext"/>
+            <PanelBody title="Link Attributes">
+                <TextControl label="Href" onChange={onChangeHref} value={href}/>
                 <div className="magicblock-flex magicblock-newtab"> 
                     <CheckboxControl 
                         label="Open in new tab"
@@ -172,32 +175,20 @@ registerBlockType( 'magicblock/magicblock', {
 
                      </PanelBody>
                      {  elemTag === "a" ? linkPanels : null }
-                     <PanelBody title="ID">
-                        <PlainText onChange={onChangeID} value={elemId} className="magicblock-plaintext"/>
-                     </PanelBody>
-                     <PanelBody title="Class(es)">
-                        <PlainText onChange={onChangeClass} value={elemClass} className="magicblock-plaintext"/>
-                     </PanelBody>
-                     <PanelBody title="Inline CSS">
-                        <PlainText onChange={onChangeInlineStyle} value={inlineSytle} className="magicblock-plaintext"/>
+                     <PanelBody title="Standard Attributes">
+                        <TextControl label="ID" value={ elemId } onChange={onChangeID} />
+                        <TextControl label="Classname (space-seperated)"onChange={onChangeClass} value={elemClass}/>
+                        <TextControl label="Inline Style" onChange={onChangeInlineStyle} value={inlineStyle}/>
                      </PanelBody>
                      <PanelBody title="Custom Attributes">
                          {customAttrs && customAttrs.map((attr, index) => (
                              <div className="magicblock-custom-attr-pair">
-                                <div>
-                                     <div className="magicblock-custom-attr-label">Name</div>
-                                     <div className="magicblock-custom-attr-key-field">
-                                         <PlainText onChange={newKey => setKeyForCustomAttrs(index, newKey)} value={attr.key} className="magicblock-plaintext"/>
-                                     </div>
-                                </div>
-                                <div>
-                                    <div className="magicblock-custom-attr-label">Value</div>
-                                    <PlainText onChange={newValue => setValueForCustomAttrs(index, newValue)} value={attr.value} className="magicblock-plaintext"/>
-                                </div>
-                                <Button isSmall={true} onClick={() => deleteCustomAttr(index)}>Delete</Button>
+                                <TextControl label="Name" onChange={newKey => setKeyForCustomAttrs(index, newKey)} value={attr.key} />
+                                <TextControl label="Value" onChange={newValue => setValueForCustomAttrs(index, newValue)} value={attr.value} />
+                                <Button isDestructive={true} onClick={() => deleteCustomAttr(index)}>Delete</Button>
                              </div>
                          ))}
-                        <div class="magic-block-right-align"><Button isSmall={true} onClick={addNewCustomAttr}>New Attribute</Button></div>
+                        <div class="magic-block-right-align"><Button isSecondary={true} onClick={addNewCustomAttr}>New Attribute</Button></div>
                      </PanelBody>
                 </InspectorControls>
                 <div className="magicblock-editor">

@@ -27,11 +27,6 @@ function magicblock_register_scripts() {
         filemtime( plugin_dir_path( __FILE__ ) . 'css/magicblock.css' )
     );
 
-    register_block_style('core/heading', [
-		'name' => 'colored-bottom-border',
-		'label' => __('Colored bottom border', 'txtdomain'),
-	]);
-
     register_block_type( 'magicblock/magicblock', array(
         'editor_script' => 'magicblock-main-script',
         'editor_style'  => 'magicblock-css'

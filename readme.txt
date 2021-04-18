@@ -2,7 +2,7 @@
 Contributors: willdelphia
 Tags:  block, container block, html element, data attributes, div, section, flexbox, css grid, tag, nesting, child blocks, parent blocks
 Requires at least: 5.0
-Tested up to: 5.3.2
+Tested up to: 5.7.1
 Requires PHP: 5.2.4
 License: GPL2
 Stable tag: trunk

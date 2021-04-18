@@ -74,10 +74,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 console.log('magicblock is up and running');
 
 var registerBlockType = wp.blocks.registerBlockType;
-var _wp$editor = wp.editor,
-    InspectorControls = _wp$editor.InspectorControls,
-    InnerBlocks = _wp$editor.InnerBlocks,
-    PlainText = _wp$editor.PlainText;
+var _wp$blockEditor = wp.blockEditor,
+    InnerBlocks = _wp$blockEditor.InnerBlocks,
+    InspectorControls = _wp$blockEditor.InspectorControls;
 var Fragment = wp.element.Fragment;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
@@ -110,13 +109,15 @@ registerBlockType('magicblock/magicblock', {
             type: 'string',
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
-            attribute: 'style'
+            attribute: 'style',
+            default: ''
         },
         href: {
             type: 'string',
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
-            attribute: 'href'
+            attribute: 'href',
+            default: ''
         },
         customAttrs: {
             type: 'array'
@@ -140,7 +141,7 @@ registerBlockType('magicblock/magicblock', {
 
     edit: function edit(props) {
         var _props$attributes = props.attributes,
-            inlineSytle = _props$attributes.inlineSytle,
+            inlineStyle = _props$attributes.inlineStyle,
             elemTag = _props$attributes.elemTag,
             elemId = _props$attributes.elemId,
             elemClass = _props$attributes.elemClass,
@@ -213,8 +214,8 @@ registerBlockType('magicblock/magicblock', {
 
         var linkPanels = wp.element.createElement(
             PanelBody,
-            { title: "Href" },
-            wp.element.createElement(PlainText, { onChange: onChangeHref, value: href, className: "magicblock-plaintext" }),
+            { title: "Link Attributes" },
+            wp.element.createElement(TextControl, { label: "Href", onChange: onChangeHref, value: href }),
             wp.element.createElement(
                 "div",
                 { className: "magicblock-flex magicblock-newtab" },
@@ -260,7 +261,7 @@ registerBlockType('magicblock/magicblock', {
                     { title: "Standard Attributes" },
                     wp.element.createElement(TextControl, { label: "ID", value: elemId, onChange: onChangeID }),
                     wp.element.createElement(TextControl, { label: "Classname (space-seperated)", onChange: onChangeClass, value: elemClass }),
-                    wp.element.createElement(TextControl, { label: "Inline Style", onChange: onChangeInlineStyle, value: inlineSytle })
+                    wp.element.createElement(TextControl, { label: "Inline Style", onChange: onChangeInlineStyle, value: inlineStyle })
                 ),
                 wp.element.createElement(
                     PanelBody,

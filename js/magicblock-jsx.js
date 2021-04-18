@@ -1,7 +1,7 @@
 console.log('magicblock is up and running');
 
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, InnerBlocks, PlainText} = wp.editor;
+const {InnerBlocks, InspectorControls } =  wp.blockEditor;
 const { Fragment } = wp.element;
 const { PanelBody, SelectControl, CheckboxControl, Button, TextControl} = wp.components;
 
@@ -28,12 +28,14 @@ registerBlockType( 'magicblock/magicblock', {
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'style',
-        }, 
+            default: ''
+        },
         href: {
             type: 'string',
             source: 'attribute',
             selector: '.wp-block-magicblock-magicblock',
             attribute: 'href',
+            default: ''
         },
         customAttrs: {
             type: 'array'
@@ -58,7 +60,7 @@ registerBlockType( 'magicblock/magicblock', {
     edit:  props => {
 
         const {
-            inlineSytle,
+            inlineStyle,
             elemTag,
             elemId,
             elemClass,
@@ -136,8 +138,8 @@ registerBlockType( 'magicblock/magicblock', {
   
 
         const linkPanels = (
-            <PanelBody title="Href">
-                <PlainText onChange={onChangeHref} value={href} className="magicblock-plaintext"/>
+            <PanelBody title="Link Attributes">
+                <TextControl label="Href" onChange={onChangeHref} value={href}/>
                 <div className="magicblock-flex magicblock-newtab"> 
                     <CheckboxControl 
                         label="Open in new tab"
@@ -176,7 +178,7 @@ registerBlockType( 'magicblock/magicblock', {
                      <PanelBody title="Standard Attributes">
                         <TextControl label="ID" value={ elemId } onChange={onChangeID} />
                         <TextControl label="Classname (space-seperated)"onChange={onChangeClass} value={elemClass}/>
-                        <TextControl label="Inline Style" onChange={onChangeInlineStyle} value={inlineSytle}/>
+                        <TextControl label="Inline Style" onChange={onChangeInlineStyle} value={inlineStyle}/>
                      </PanelBody>
                      <PanelBody title="Custom Attributes">
                          {customAttrs && customAttrs.map((attr, index) => (
